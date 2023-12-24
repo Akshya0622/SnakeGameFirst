@@ -50,31 +50,19 @@ public class RecursiveMazeGenerator : MonoBehaviour
         }
     }
 
-    void drawMaze()
-    {
-        for (int x = 0; x < width; x++)
-        {
-            for (int y = 0; y < height; y++)
-            {
-                if (maze[x, y] == 1)
-                {
-                    Instantiate(wallPrefab, new Vector3(x, y, 0), Quaternion.identity);
-                }
-            }
-        }
-    }
+  
     void drawMaze2()
     {
         float cellSize = 1.0f; 
-        Vector3 mazeOffset = new Vector3(-(screenWidth - 1) * cellSize / 2, -(screenHeight - 1) * cellSize / 2, 0);
+        Vector3 centerize = new Vector3(-(screenWidth - 1) * cellSize / 2, -(screenHeight - 1) * cellSize / 2, 0); // center on the game window
 
         for (int x = 0; x < screenWidth; x++)
         {
             for (int y = 0; y < screenHeight; y++)
             {
-                if (maze[x, y] == 1)
+                if (maze[x, y] != 1)
                 {
-                    Vector3 pos = new Vector3(x * cellSize, y * cellSize, 0) + mazeOffset;
+                    Vector3 pos = new Vector3(x * cellSize, y * cellSize, 0) + centerize;
                     Instantiate(wallPrefab, pos, Quaternion.identity);
                 }
             }
