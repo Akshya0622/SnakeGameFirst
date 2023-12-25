@@ -7,7 +7,8 @@ public class RecursiveMazeGenerator : MonoBehaviour
     public int height = 10;
     public int screenWidth = 22;
     public int screenHeight = 10;
-    public GameObject wallPrefab; 
+    public GameObject wallPrefab;
+    public GameObject snakePrefab;
     private int[,] maze;
 
     // positions
@@ -56,13 +57,27 @@ public class RecursiveMazeGenerator : MonoBehaviour
         float cellSize = 1.0f; 
         Vector3 centerize = new Vector3(-(screenWidth - 1) * cellSize / 2, -(screenHeight - 1) * cellSize / 2, 0); // center on the game window
 
-        for (int x = 0; x < screenWidth; x++)
+        for (int x = -1; x < screenWidth+1; x++)
         {
-            for (int y = 0; y < screenHeight; y++)
+            for (int y = -1; y < screenHeight+1; y++)
             {
-                if (maze[x, y] != 1)
+                Vector3 pos = new Vector3(x * cellSize, y * cellSize, 0) + centerize;
+
+                if (x >= 0 && y >= 0 && x < screenWidth && y < screenHeight) 
                 {
-                    Vector3 pos = new Vector3(x * cellSize, y * cellSize, 0) + centerize;
+                    if (maze[x, y] != 1)
+                    {
+
+                        Instantiate(wallPrefab, pos, Quaternion.identity);
+                    }
+                }
+               
+                if(x == 0 & y == 0)
+                {
+                    snakePrefab.transform.position = pos;
+                }
+                if(x < 0 || y < 0 || x >= screenWidth || y >= screenHeight)
+                {
                     Instantiate(wallPrefab, pos, Quaternion.identity);
                 }
             }
