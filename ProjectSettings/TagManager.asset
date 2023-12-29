@@ -6,6 +6,7 @@ TagManager:
   tags:
   - path
   - wall
+  - key
   layers:
   - Default
   - TransparentFX

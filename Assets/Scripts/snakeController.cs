@@ -2,56 +2,43 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class snakeController : MonoBehaviour
-{
-    float speed = 3.0f;
+
+    public class snakeController : MonoBehaviour
+    {
+        float speed = 3.0f;
+        Rigidbody2D rigidbody2d;
+        float horizontal;
+        float vertical;
+    public RecursiveMazeGenerator r;
+
+    // Start is called before the first frame update
     void Start()
-    {
-        
-    }
+        {
+            rigidbody2d = GetComponent<Rigidbody2D>();
+        Debug.Log(r.screenWidth);
+        }
 
-    // Update is called once per frame
-    void Update()
-    {
-        if(Input.GetKey(KeyCode.LeftArrow))
+        // Update is called once per frame
+        void Update()
         {
-            transform.Translate(-speed * Time.deltaTime, 0, 0);
+            horizontal = Input.GetAxis("Horizontal");
+            vertical = Input.GetAxis("Vertical");
         }
-        if (Input.GetKey(KeyCode.RightArrow))
-        {
-            transform.Translate(speed * Time.deltaTime, 0, 0);
-        }
-        if (Input.GetKey(KeyCode.DownArrow))
-        {
-            transform.Translate(0, -speed * Time.deltaTime, 0);
-        }
-        if (Input.GetKey(KeyCode.UpArrow))
-        {
-            transform.Translate(0, speed * Time.deltaTime, 0);
-        }
-    }
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if(collision.gameObject.tag == "wall") 
-        {
-            Debug.Log("hit wall");
 
-            if (Input.GetKey(KeyCode.LeftArrow))
+        void FixedUpdate()
+        {
+            Vector2 position = rigidbody2d.position;
+            position.x = position.x + speed * horizontal * Time.deltaTime;
+            position.y = position.y + speed * vertical * Time.deltaTime;
+
+            rigidbody2d.MovePosition(position);
+        }
+        private void OnCollisionEnter2D(Collision2D collision)
+        {
+            if (collision.gameObject.tag == "key")
             {
-                transform.Translate(speed * Time.deltaTime, 0, 0);
-            }
-            if (Input.GetKey(KeyCode.RightArrow))
-            {
-                transform.Translate(-speed * Time.deltaTime, 0, 0);
-            }
-            if (Input.GetKey(KeyCode.DownArrow))
-            {
-                transform.Translate(0, speed * Time.deltaTime, 0);
-            }
-            if (Input.GetKey(KeyCode.UpArrow))
-            {
-                transform.Translate(0, -speed * Time.deltaTime, 0);
+                Destroy(collision.gameObject);
             }
         }
+
     }
-}
