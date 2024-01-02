@@ -9,13 +9,13 @@ using UnityEngine;
         Rigidbody2D rigidbody2d;
         float horizontal;
         float vertical;
-    public RecursiveMazeGenerator r;
+   
 
     // Start is called before the first frame update
     void Start()
         {
             rigidbody2d = GetComponent<Rigidbody2D>();
-        Debug.Log(r.screenWidth);
+       
         }
 
         // Update is called once per frame
