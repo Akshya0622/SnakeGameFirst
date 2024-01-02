@@ -255,6 +255,8 @@ MonoBehaviour:
   wallPrefab: {fileID: 1951121922464946017, guid: c3fe254cdd0d2c7459fe9260909b290d, type: 3}
   snakePrefab: {fileID: 842375624}
   keyPrefab: {fileID: 5833171537810133693, guid: 85737b01fd4f4d74db85ecea13a90a01, type: 3}
+  dirX: 000000000100000000000000ffffffff
+  dirY: 0100000000000000ffffffff00000000
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -608,11 +610,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3652341123428122847, guid: f27b5b86d0343034b86b8349a6c99653, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 3.3999515
+      value: 8.05
       objectReference: {fileID: 0}
     - target: {fileID: 3652341123428122847, guid: f27b5b86d0343034b86b8349a6c99653, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.6197882
+      value: -8.08
       objectReference: {fileID: 0}
     - target: {fileID: 3652341123428122847, guid: f27b5b86d0343034b86b8349a6c99653, type: 3}
       propertyPath: m_LocalPosition.z
@@ -646,6 +648,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4233258699224145565, guid: f27b5b86d0343034b86b8349a6c99653, type: 3}
+      propertyPath: r
+      value: 
+      objectReference: {fileID: 340519504}
     - target: {fileID: 7193046732131224233, guid: f27b5b86d0343034b86b8349a6c99653, type: 3}
       propertyPath: m_Name
       value: evilNorm_0
