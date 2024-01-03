@@ -6,42 +6,54 @@ public class enemyController : MonoBehaviour
 {
     public RecursiveMazeGenerator r;
     public float speed = 2.0f;
-        
+
+    float timeInDirection = 5;
+    float timer;
+    int randomDirection;
+    
     void Start()
     {
-        Vector3 initialPos = getStartPos();
+        timer = timeInDirection;
+        Vector3 initialPos = new Vector3(0,0,0);
         transform.position = initialPos;
-       
-     
+      
     }
 
     // Update is called once per frame
     void Update()
     {
         moveRandomly();
+
+
+
+        
     }
 
     void moveRandomly()
     {
-        int randomDirection = Random.Range(0, 4);
-        Vector3 newPosition = transform.position;
-        switch (randomDirection)
-        {
-            case 0:
-                newPosition += Vector3.up;
+        
+            randomDirection = Random.Range(0, 4);
+           
+            switch (randomDirection)
+            {
+                case 0:
+                transform.position += Vector3.up * speed * Time.deltaTime;
+                    break;
+                case 1:
+                transform.position += Vector3.right * speed * Time.deltaTime;
                 break;
-            case 1: newPosition += Vector3.right * speed;
-                break;
-            case 2: newPosition += Vector3.down * speed;
-                break;
-            case 3: newPosition += Vector3.left * speed ;
-                break;
-        }
-        RaycastHit2D checkCol = Physics2D.Raycast(transform.position, newPosition - transform.position, 1.0f); // checking if there is a collision in the direction we wanna go
-        if (checkCol.collider == null)
-        {
-            transform.position = newPosition;
-        }
+                case 2:
+                transform.position += Vector3.down * speed * Time.deltaTime;
+                    break;
+                case 3:
+                transform.position += Vector3.left * speed * Time.deltaTime;
+                    break;
+            }
+            
+            
+            
+        
+        
 
     }
 
@@ -68,9 +80,17 @@ public class enemyController : MonoBehaviour
         }
         
     }
-        
-        
-    
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(collision.gameObject.tag == "wall")
+        {
+            randomDirection = Random.Range(0, 4);
+        }
+    }
+
+
+
 }
 
 

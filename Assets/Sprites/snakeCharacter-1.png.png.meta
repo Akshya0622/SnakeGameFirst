@@ -128,7 +128,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      snakeCharacter-1.png_0: 7814807471042397655
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
