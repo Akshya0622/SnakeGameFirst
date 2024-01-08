@@ -5,28 +5,24 @@ using UnityEngine;
 public class enemyController : MonoBehaviour
 {
     public RecursiveMazeGenerator r;
-    public float speed = 2.0f;
+    public float speed = 5.0f;
+    Vector2 currentDir;
 
-    float timeInDirection = 5;
-    float timer;
     int randomDirection;
     
     void Start()
     {
-        timer = timeInDirection;
-        Vector3 initialPos = new Vector3(0,0,0);
-        transform.position = initialPos;
+
+        currentDir = getStartPos();
+       
       
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        moveRandomly();
-
-
-
-        
+        transform.Translate(currentDir * speed * Time.deltaTime);
+        checkCollisions();
     }
 
     void moveRandomly()
@@ -36,30 +32,28 @@ public class enemyController : MonoBehaviour
            
             switch (randomDirection)
             {
-                case 0:
-                transform.position += Vector3.up * speed * Time.deltaTime;
-                    break;
-                case 1:
-                transform.position += Vector3.right * speed * Time.deltaTime;
+            case 0:
+                currentDir = new Vector2(0,1).normalized;
                 break;
-                case 2:
-                transform.position += Vector3.down * speed * Time.deltaTime;
-                    break;
-                case 3:
-                transform.position += Vector3.left * speed * Time.deltaTime;
-                    break;
+            case 1:
+                currentDir = new Vector2(1,0).normalized;
+                break;
+            case 2:
+                currentDir = new Vector2(0,-1).normalized;
+                break;
+            case 3:
+                currentDir = new Vector2(-1, -1).normalized;
+                break;
             }
             
             
-            
-        
-        
+   
 
     }
 
-    Vector3 getStartPos()
+    Vector2 getStartPos()
     {
-        Vector3 startPos;
+        Vector2 startPos;
         int width = r.screenWidth;
         int height = r.screenHeight;
         int[,] maze = r.maze;
@@ -73,7 +67,7 @@ public class enemyController : MonoBehaviour
             }
             else
             {
-                startPos = new Vector3(x, y, 0);
+                startPos = new Vector2(x, y);
                 return startPos;
                 
             }
@@ -81,12 +75,18 @@ public class enemyController : MonoBehaviour
         
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    void checkCollisions()
     {
-        if(collision.gameObject.tag == "wall")
+       
+        RaycastHit2D futCol = Physics2D.Raycast(transform.position, currentDir, 0.1f); // raycast checks collisions in direction we're tryna go
+
+        
+        if (futCol.collider.tag == "wall") // if collision change direction
         {
-            randomDirection = Random.Range(0, 4);
+            Debug.Log("Collision detected with: " + futCol.collider.name);
+            moveRandomly();
         }
+        
     }
 
 
