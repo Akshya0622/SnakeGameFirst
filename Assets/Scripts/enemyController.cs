@@ -78,9 +78,10 @@ public class enemyController : MonoBehaviour
     void checkCollisions()
     {
         Debug.Log("Checking collisions");
-        RaycastHit2D futCol = Physics2D.Raycast(transform.position, currentDir, 1f);
+        RaycastHit2D futCol = Physics2D.Raycast(transform.position, currentDir, .05f);
+        Debug.DrawRay(transform.position, currentDir, Color.red, 0.05f);
 
-        if (futCol.collider.tag != null) 
+        if (futCol.collider != null) 
         {
             Debug.Log("Collision detected with: " + futCol.collider.name);
             moveRandomly();
