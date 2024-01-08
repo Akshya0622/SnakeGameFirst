@@ -13,7 +13,7 @@ public class enemyController : MonoBehaviour
     void Start()
     {
 
-        currentDir = getStartPos();
+        currentDir = new Vector2(0,0);
        
       
     }
@@ -42,7 +42,7 @@ public class enemyController : MonoBehaviour
                 currentDir = new Vector2(0,-1).normalized;
                 break;
             case 3:
-                currentDir = new Vector2(-1, -1).normalized;
+                currentDir = new Vector2(-1, 0).normalized;
                 break;
             }
             
@@ -77,16 +77,15 @@ public class enemyController : MonoBehaviour
 
     void checkCollisions()
     {
-       
-        RaycastHit2D futCol = Physics2D.Raycast(transform.position, currentDir, 0.1f); // raycast checks collisions in direction we're tryna go
+        Debug.Log("Checking collisions");
+        RaycastHit2D futCol = Physics2D.Raycast(transform.position, currentDir, 1f);
 
-        
-        if (futCol.collider.tag == "wall") // if collision change direction
+        if (futCol.collider.tag != null) 
         {
             Debug.Log("Collision detected with: " + futCol.collider.name);
             moveRandomly();
         }
-        
+
     }
 
 
