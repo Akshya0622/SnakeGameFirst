@@ -15,7 +15,15 @@ public class enemyController : MonoBehaviour
 
         currentDir = new Vector2(0,0);
         rb = GetComponent<Rigidbody2D>();
+        if (rb == null)
+        {
+            Debug.LogError("Rigidbody2D component not found on the GameObject.");
+            return;
+        }
         randomDirection = Random.Range(0, 4);
+        
+
+       
 
 
     }
@@ -23,7 +31,7 @@ public class enemyController : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        transform.Translate(currentDir * speed * Time.deltaTime);
+        rb.velocity = currentDir * speed;
        
     }
 
