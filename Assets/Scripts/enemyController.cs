@@ -5,30 +5,32 @@ using UnityEngine;
 public class enemyController : MonoBehaviour
 {
     public RecursiveMazeGenerator r;
-    public float speed = 5.0f;
+    public float speed = 2.0f;
     Vector2 currentDir;
-
+    private Rigidbody2D rb;
     int randomDirection;
     
     void Start()
     {
 
         currentDir = new Vector2(0,0);
-       
-      
+        rb = GetComponent<Rigidbody2D>();
+        randomDirection = Random.Range(0, 4);
+
+
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
         transform.Translate(currentDir * speed * Time.deltaTime);
-        checkCollisions();
+       
     }
 
     void moveRandomly()
     {
         
-            randomDirection = Random.Range(0, 4);
+            
            
             switch (randomDirection)
             {
@@ -75,18 +77,22 @@ public class enemyController : MonoBehaviour
         
     }
 
-    void checkCollisions()
+    void OnCollisionEnter2D(Collision2D collision)
     {
-        Debug.Log("Checking collisions");
-        RaycastHit2D futCol = Physics2D.Raycast(transform.position, currentDir, .05f);
-        Debug.DrawRay(transform.position, currentDir, Color.red, 0.05f);
-
-        if (futCol.collider != null) 
+        if (collision.gameObject.layer == LayerMask.NameToLayer("wallLay"))
         {
-            Debug.Log("Collision detected with: " + futCol.collider.name);
-            moveRandomly();
-        }
+            Debug.Log("Collision with wall detected.");
 
+            int newDir;
+            do
+            {
+                newDir = Random.Range(0, 4);
+
+            } while (newDir == randomDirection);
+            randomDirection = newDir;
+                moveRandomly();
+            
+        }
     }
 
 
