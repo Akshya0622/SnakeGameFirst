@@ -31,6 +31,7 @@ public class enemyController : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        check();
         rb.velocity = currentDir * speed;
        
     }
@@ -87,19 +88,29 @@ public class enemyController : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.layer == LayerMask.NameToLayer("wallLay"))
-        {
-            Debug.Log("Collision with wall detected.");
+        
+            Debug.Log("Collision with wall detected." + randomDirection);
 
-            int newDir;
+        int newDir;
             do
             {
                 newDir = Random.Range(0, 4);
 
             } while (newDir == randomDirection);
             randomDirection = newDir;
-                moveRandomly();
-            
+               
+        Debug.Log("New Direction" + randomDirection);
+        moveRandomly();
+    }
+    void check()
+    {
+        RaycastHit2D collision = Physics2D.Raycast(transform.position, currentDir, .1f);
+        Debug.DrawRay(transform.position, currentDir,Color.red, .1f);
+
+        if(collision.collider.tag!=null)
+        {
+
+            moveRandomly();
         }
     }
 
