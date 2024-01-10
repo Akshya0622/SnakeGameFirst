@@ -12,8 +12,9 @@ public class enemyController : MonoBehaviour
     
     void Start()
     {
+        
 
-        currentDir = new Vector2(0,0);
+        currentDir = getStartPos();
         rb = GetComponent<Rigidbody2D>();
         if (rb == null)
         {
@@ -31,7 +32,7 @@ public class enemyController : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        check();
+        
         rb.velocity = currentDir * speed;
        
     }
@@ -72,16 +73,15 @@ public class enemyController : MonoBehaviour
         {
             float x = Random.Range(-width/ 2, width / 2);
             float y = Random.Range(-height / 2, height / 2);
-            if (maze[(int)(x + width / 2), (int)(y + height / 2)] == 0)
-            {
-                continue;
-            }
-            else
+            if (maze[(int)(x + width / 2), (int)(y + height / 2)] == 1)
             {
                 startPos = new Vector2(x, y);
                 return startPos;
-                
             }
+            
+               
+                
+            
         }
         
     }
@@ -102,18 +102,7 @@ public class enemyController : MonoBehaviour
         Debug.Log("New Direction" + randomDirection);
         moveRandomly();
     }
-    void check()
-    {
-        RaycastHit2D collision = Physics2D.Raycast(transform.position, currentDir, .1f);
-        Debug.DrawRay(transform.position, currentDir,Color.red, .1f);
-
-        if(collision.collider.tag!=null)
-        {
-
-            moveRandomly();
-        }
-    }
-
+   
 
 
 }
