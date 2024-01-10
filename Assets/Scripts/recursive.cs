@@ -14,9 +14,11 @@ using UnityEngine;
         public GameObject snakePrefab;
         public GameObject keyPrefab;
         public int[,] maze;
+        public Vector3 centerize;
+        public float cellSize = 1.0f;
 
-        // positions
-        public int[] dirX = { 0, 1, 0, -1 };
+    // positions
+    public int[] dirX = { 0, 1, 0, -1 };
         public int[] dirY = { 1, 0, -1, 0 };
 
         void Start()
@@ -58,8 +60,8 @@ using UnityEngine;
 
         void drawMaze2()
         {
-            float cellSize = 1.0f;
-            Vector3 centerize = new Vector3(-(screenWidth - 1) * cellSize / 2, -(screenHeight - 1) * cellSize / 2, 0); // center on the game window
+            
+            centerize = new Vector3(-(screenWidth - 1) * cellSize / 2, -(screenHeight - 1) * cellSize / 2, 0); // center on the game window
 
             for (int x = -1; x < screenWidth + 1; x++)
             {

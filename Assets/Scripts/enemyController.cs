@@ -7,13 +7,13 @@ public class enemyController : MonoBehaviour
     public RecursiveMazeGenerator r;
     public float speed = 2.0f;
     Vector2 currentDir;
-    private Rigidbody2D rb;
+    public Rigidbody2D rb;
     int randomDirection;
     
     void Start()
     {
-        
 
+        r = FindObjectOfType<RecursiveMazeGenerator>();
         currentDir = getStartPos();
         rb = GetComponent<Rigidbody2D>();
         if (rb == null)

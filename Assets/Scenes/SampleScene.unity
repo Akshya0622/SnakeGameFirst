@@ -171,6 +171,8 @@ MonoBehaviour:
   wallPrefab: {fileID: 1951121922464946017, guid: c3fe254cdd0d2c7459fe9260909b290d, type: 3}
   snakePrefab: {fileID: 842375624}
   keyPrefab: {fileID: 5833171537810133693, guid: 85737b01fd4f4d74db85ecea13a90a01, type: 3}
+  centerize: {x: 0, y: 0, z: 0}
+  cellSize: 1
   dirX: 000000000100000000000000ffffffff
   dirY: 0100000000000000ffffffff00000000
 --- !u!1 &519420028
@@ -460,6 +462,7 @@ GameObject:
   - component: {fileID: 1705844365}
   - component: {fileID: 1705844364}
   - component: {fileID: 1705844368}
+  - component: {fileID: 1705844369}
   m_Layer: 0
   m_Name: Circle
   m_TagString: Untagged
@@ -474,7 +477,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1705844363}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8633fce824cf82b43b25172608614107, type: 3}
   m_Name: 
@@ -599,7 +602,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -610,7 +613,23 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 0
   m_CollisionDetection: 1
-  m_Constraints: 0
+  m_Constraints: 4
+--- !u!114 &1705844369
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1705844363}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a657b487fdfe08046a926c780ea3263f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  r: {fileID: 340519504}
+  currentDir: {x: 0, y: 0}
+  rb: {fileID: 1705844368}
+  speed: 2
 --- !u!1001 &2635108605605065704
 PrefabInstance:
   m_ObjectHideFlags: 0
