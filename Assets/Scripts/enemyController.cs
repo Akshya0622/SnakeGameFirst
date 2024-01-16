@@ -1,66 +1,50 @@
-using Unity.Burst.CompilerServices;
+using System.Threading;
 using UnityEngine;
 
-
-public class enemyController : MonoBehaviour
+public class EnemyController : MonoBehaviour
 {
     public RecursiveMazeGenerator r;
     public float speed = 2.0f;
-    Vector2 currentDir;
-    public Rigidbody2D rb;
+    public float timer;
+    public float countdownTime = 0.5f;
     int randomDirection;
-    
+
     void Start()
     {
-
         r = FindObjectOfType<RecursiveMazeGenerator>();
-        currentDir = getStartPos();
-        rb = GetComponent<Rigidbody2D>();
-        if (rb == null)
-        {
-            Debug.LogError("Rigidbody2D component not found on the GameObject.");
-            return;
-        }
+        transform.position = getStartPos();
         randomDirection = Random.Range(0, 4);
-        
-
-       
-
-
+        Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("enemy"), LayerMask.NameToLayer("key"));
     }
 
-    // Update is called once per frame
     void FixedUpdate()
     {
-        
-        rb.velocity = currentDir * speed;
-       
+        moveRandomly();
     }
 
     void moveRandomly()
     {
         
-            
-           
-            switch (randomDirection)
-            {
+        Vector2 currentDir = Vector2.zero;
+
+        switch (randomDirection)
+        {
             case 0:
-                currentDir = new Vector2(0,1).normalized;
+                currentDir = Vector2.up;
                 break;
             case 1:
-                currentDir = new Vector2(1,0).normalized;
+                currentDir = Vector2.right;
                 break;
             case 2:
-                currentDir = new Vector2(0,-1).normalized;
+                currentDir = Vector2.down;
                 break;
             case 3:
-                currentDir = new Vector2(-1, 0).normalized;
+                currentDir = Vector2.left;
                 break;
-            }
-            
-            
-   
+        }
 
+        Vector3 change = new Vector3(currentDir.x, currentDir.y, 0);
+        transform.position += change * speed * Time.deltaTime;
     }
 
     Vector2 getStartPos()
@@ -68,43 +52,41 @@ public class enemyController : MonoBehaviour
         Vector2 startPos;
         int width = r.screenWidth;
         int height = r.screenHeight;
-        int[,] maze = r.maze;
+
         while (true)
         {
-            float x = Random.Range(-width/ 2, width / 2);
+            float x = Random.Range(-width / 2, width / 2);
             float y = Random.Range(-height / 2, height / 2);
-            if (maze[(int)(x + width / 2), (int)(y + height / 2)] == 1)
+            if (r.maze[(int)(x + width / 2), (int)(y + height / 2)] == 1)
             {
                 startPos = new Vector2(x, y);
                 return startPos;
             }
-            
-               
-                
-            
         }
-        
     }
 
-    void OnCollisionEnter2D(Collision2D collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        
-            Debug.Log("Collision with wall detected." + randomDirection);
 
-        int newDir;
-            do
-            {
-                newDir = Random.Range(0, 4);
-
-            } while (newDir == randomDirection);
-            randomDirection = newDir;
-               
-        Debug.Log("New Direction" + randomDirection);
-        moveRandomly();
+        if (collision.gameObject.tag == "wall")
+        {
+            // Change direction randomly
+            randomDirection = Random.Range(0, 4);
+        }
+        timer = countdownTime;
     }
-   
-
-
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+       
+            if (timer > 0f)
+            {
+                timer -= Time.deltaTime;
+            }
+            else
+            {
+                randomDirection = Random.Range(0, 4);
+            }
+        
+       
+    }
 }
-
-

@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 5afc9743af7b5204cbb3ff5644e26d0b
+guid: 37a7d2ef99837c242897984c54fedef7
 TextureImporter:
   internalIDToNameTable:
   - first:
@@ -128,8 +128,7 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable:
-      New Piskel (4)_0: -8527442550737655860
+    nameFileIdTable: {}
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

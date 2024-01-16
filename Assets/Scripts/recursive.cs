@@ -75,6 +75,7 @@ using UnityEngine;
                         {
 
                             Instantiate(wallPrefab, pos, Quaternion.identity); // walls
+                            Debug.Log(pos + " " + x + " ," + y);
                         }
                     }
 
@@ -85,7 +86,8 @@ using UnityEngine;
                     if (x < 0 || y < 0 || x >= screenWidth || y >= screenHeight)
                     {
                         Instantiate(wallPrefab, pos, Quaternion.identity); // border
-                    }
+                    Debug.Log(pos + " " + x + " ," + y);
+                }
                 }
             }
 
