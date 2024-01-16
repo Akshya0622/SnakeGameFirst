@@ -20,6 +20,7 @@ public class EnemyController : MonoBehaviour
     void FixedUpdate()
     {
         moveRandomly();
+        
     }
 
     void moveRandomly()
@@ -70,8 +71,9 @@ public class EnemyController : MonoBehaviour
 
         if (collision.gameObject.tag == "wall")
         {
-            // Change direction randomly
+            
             randomDirection = Random.Range(0, 4);
+
         }
         timer = countdownTime;
     }

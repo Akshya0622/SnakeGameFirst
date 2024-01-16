@@ -9,6 +9,7 @@ using UnityEngine;
         Rigidbody2D rigidbody2d;
         float horizontal;
         float vertical;
+        int health = 5;
    
 
     // Start is called before the first frame update
@@ -38,6 +39,11 @@ using UnityEngine;
             if (collision.gameObject.tag == "key")
             {
                 Destroy(collision.gameObject);
+            }
+            if(collision.gameObject.tag == "enemy")
+            {
+            health--;
+            Debug.Log(health);
             }
         }
 

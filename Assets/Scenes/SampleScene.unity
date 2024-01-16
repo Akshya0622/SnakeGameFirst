@@ -213,10 +213,10 @@ MonoBehaviour:
   m_LookAt: {fileID: 0}
   m_Follow: {fileID: 842375626}
   m_Lens:
-    FieldOfView: 60
+    FieldOfView: 40
     OrthographicSize: 2
-    NearClipPlane: 0.3
-    FarClipPlane: 1000
+    NearClipPlane: 0.1
+    FarClipPlane: 5000
     Dutch: 0
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
@@ -305,9 +305,9 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.3
-  far clip plane: 1000
-  field of view: 60
+  near clip plane: 0.1
+  far clip plane: 5000
+  field of view: 40
   orthographic: 1
   orthographic size: 2
   m_Depth: -1
@@ -591,7 +591,7 @@ MonoBehaviour:
   r: {fileID: 340519504}
   speed: 2
   timer: 0
-  countdownTime: 2
+  countdownTime: 0.5
 --- !u!50 &1083604735
 Rigidbody2D:
   serializedVersion: 4
@@ -680,8 +680,8 @@ Transform:
   m_GameObject: {fileID: 1083604732}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -9.5035, y: -3.4976, z: 0}
-  m_LocalScale: {x: 0.28299865, y: 0.21491443, z: 1}
+  m_LocalPosition: {x: -9.5047, y: -3.4943, z: 0}
+  m_LocalScale: {x: 0.29667914, y: 0.22148056, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -720,7 +720,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.009248853, y: 0.012175679}
+  m_Offset: {x: 0.020511627, y: -0.019711733}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -730,7 +730,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 3.176563, y: 4.3682346}
+  m_Size: {x: 3.378903, y: 4.432009}
   m_EdgeRadius: 0
 --- !u!1 &1815672766
 GameObject:

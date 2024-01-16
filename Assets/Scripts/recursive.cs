@@ -63,9 +63,9 @@ using UnityEngine;
             
             centerize = new Vector3(-(screenWidth - 1) * cellSize / 2, -(screenHeight - 1) * cellSize / 2, 0); // center on the game window
 
-            for (int x = -1; x < screenWidth + 1; x++)
+            for (int x = -5; x < screenWidth + 5; x++)
             {
-                for (int y = -1; y < screenHeight + 1; y++)
+                for (int y = -5; y < screenHeight + 5; y++)
                 {
                     Vector3 pos = new Vector3(x * cellSize, y * cellSize, 0) + centerize;
 
