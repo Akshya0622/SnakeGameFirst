@@ -12,6 +12,7 @@ public class EnemyController : MonoBehaviour
     void Start()
     {
         r = FindObjectOfType<RecursiveMazeGenerator>();
+
         transform.position = getStartPos();
         randomDirection = Random.Range(0, 4);
         Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("enemy"), LayerMask.NameToLayer("key"));
