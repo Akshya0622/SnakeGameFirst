@@ -5,23 +5,31 @@ using UnityEngine;
 public class laserScript : MonoBehaviour
 {
 
-    public float speed = 6f;
-    private Vector3 direction;
+    public float speed = 5.0f;
+    private Vector2 direction;
 
-    public void setDir (Vector3 dir)
+   
+    public void SetDirection(Vector2 newDirection)
     {
-        direction = dir;
+        direction = newDirection.normalized;
     }
-    public void Update()
+
+    
+    void Start()
     {
+        
+        Destroy(gameObject, 2.0f);
+    }
+
+  
+    void Update()
+    {
+        Move();
+    }
+
+    void Move()
+    {
+        
         transform.Translate(direction * speed * Time.deltaTime);
-    }
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("enemy"))
-        {
-            Destroy(collision.gameObject); 
-            Destroy(gameObject); 
-        }
     }
 }
