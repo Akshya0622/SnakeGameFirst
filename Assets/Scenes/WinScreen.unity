@@ -311,6 +311,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   image: {fileID: 2131706409}
   flashTime: 2
+  cycle: 2
+  timer: 0
 --- !u!4 &1231166734
 Transform:
   m_ObjectHideFlags: 0
@@ -463,8 +465,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 1247, y: 0}
-  m_SizeDelta: {x: 3489.3394, y: 1009.3413}
+  m_AnchoredPosition: {x: 1559, y: -54}
+  m_SizeDelta: {x: 4297.641, y: 1252.8057}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1623421055
 MonoBehaviour:

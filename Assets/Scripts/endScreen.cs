@@ -5,15 +5,18 @@ using UnityEngine.UI;
 
 
 
-public class ImageFlasher : MonoBehaviour
+public class endScreen : MonoBehaviour
 {
     public Image image;
     public float flashTime = 1f; 
-    public float cycle = 2f; 
+    public float cycle = 2f;
+    
+    public float timer = 0f;
 
-    private float timer = 0f;
-    private bool isVisible = false;
-
+    void Start()
+    {
+        image.enabled = false;
+    }
     void Update()
     {
         timer += Time.deltaTime;
@@ -22,25 +25,20 @@ public class ImageFlasher : MonoBehaviour
         {
             
             image.enabled = true;
-            isVisible = true;
-        }
-        else if (timer <= cycle)
-        {
             
-            if (isVisible)
-            {
-                image.enabled = true;
-            }
-            else
-            {
+        }
+        else if (timer <= cycle && timer > flashTime)
+        {
+          
                 image.enabled = false;
-            }
+                
+            
         }
         else
         {
-            
             timer = 0f;
-            isVisible = false;
+            
         }
+        
     }
 }
