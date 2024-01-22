@@ -32,4 +32,18 @@ public class laserScript : MonoBehaviour
         
         transform.Translate(direction * speed * Time.deltaTime);
     }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if(other.gameObject.tag == "enemy")
+        {
+            Destroy(other.gameObject);
+            Destroy(gameObject);
+        }
+        if(other.gameObject.tag == "wall")
+        {
+            Destroy(gameObject);
+        }
+    }
+
 }

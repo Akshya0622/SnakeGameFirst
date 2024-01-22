@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
+using Unity.VisualScripting;
 using UnityEngine;
 
 
@@ -16,6 +17,11 @@ using UnityEngine;
         public int[,] maze;
         public Vector3 centerize;
         public float cellSize = 1.0f;
+        public GameObject[] enemies;
+        public Vector3[] keyLocations;
+        
+        
+
 
     // positions
     public int[] dirX = { 0, 1, 0, -1 };
@@ -23,12 +29,14 @@ using UnityEngine;
 
         void Start()
         {
+           
             maze = new int[screenWidth, screenHeight];
             generateMaze(0, 0);
             drawMaze2();
         }
+    
 
-        void generateMaze(int x, int y)
+    void generateMaze(int x, int y)
         {
             maze[x, y] = 1; // Mark the current cell as visited (1 means visited square 0 not)
 
@@ -75,7 +83,7 @@ using UnityEngine;
                         {
 
                             Instantiate(wallPrefab, pos, Quaternion.identity); // walls
-                            Debug.Log(pos + " " + x + " ," + y);
+                            //Debug.Log(pos + " " + x + " ," + y);
                         }
                     }
 
@@ -86,30 +94,12 @@ using UnityEngine;
                     if (x < 0 || y < 0 || x >= screenWidth || y >= screenHeight)
                     {
                         Instantiate(wallPrefab, pos, Quaternion.identity); // border
-                    Debug.Log(pos + " " + x + " ," + y);
-                }
-                }
-            }
-
-
-            int keyCount = 0;
-
-            while (keyCount < 3)
-
-            {
-
-                Vector3 keyLoc = new Vector3(Random.Range(-screenWidth / 2, screenWidth / 2), Random.Range(-screenHeight / 2, screenHeight / 2), 0); // random loc in the maze
-
-                if (maze[(int)(keyLoc.x + screenWidth / 2), (int)(keyLoc.y + screenHeight / 2)] == 0) 
-                {
-                    continue;
-                }
-                else
-                {
-                    Instantiate(keyPrefab, keyLoc, Quaternion.identity);
-                    keyCount++;
+                        //Debug.Log(pos + " " + x + " ," + y);
+                    }
                 }
             }
+
+            spawnKeys();
 
 
 
@@ -121,8 +111,65 @@ using UnityEngine;
         {
             return x >= 0 && x < screenWidth && y >= 0 && y < screenHeight;
         }
+        
+    void spawnKeys()
+    {
 
+          int keyCount = 0;
+          while (keyCount < 3)
 
+            {
+
+            Vector3 keyLoc = new Vector3(Random.Range(-screenWidth / 2, screenWidth / 2), Random.Range(-screenHeight / 2, screenHeight / 2), 0); // random location in the maze
+
+            if (maze[(int)(keyLoc.x + screenWidth / 2), (int)(keyLoc.y + screenHeight / 2)] == 0)
+            {
+                continue;
+            }
+            else
+            {
+                Instantiate(keyPrefab, keyLoc, Quaternion.identity); // instantiate if its a path spot
+
+                keyLocations[keyCount] = keyLoc;
+                keyCount++;
+                
+            }
+            
+            }
+        enemies[0].transform.position = keyLocations[0];
+        Debug.Log(enemies[0].transform.position);
+        enemies[1].transform.position = keyLocations[1];
+        Debug.Log(enemies[1].transform.position);
+        enemies[2].transform.position = keyLocations[2];
+        Debug.Log(enemies[2].transform.position);
+
+     }
+    
+       
+
+       
 
     }
 
+
+/*for (int i = 0; i < 3; i++)
+{
+   EnemyController enemy = enemies[i].GetComponent<EnemyController>();
+
+   if (enemy != null)
+   {
+       enemy.spawnPosition = keyLocations[i];
+       Debug.Log(enemy.spawnPosition.ToString());
+   }
+EnemyController enemy1 = enemies[0].GetComponent<EnemyController>();
+       enemy1.spawnPosition = keyLocations[0];
+       Debug.Log(enemy1.spawnPosition.ToString());
+
+       EnemyController enemy2 = enemies[1].GetComponent<EnemyController>();
+       enemy2.spawnPosition = keyLocations[1];
+       Debug.Log(enemy2.spawnPosition.ToString());
+
+       EnemyController enemy3 = enemies[2].GetComponent<EnemyController>();
+       enemy3.spawnPosition = keyLocations[2];
+       Debug.Log(enemy3.spawnPosition.ToString());
+} */

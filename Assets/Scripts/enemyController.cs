@@ -8,12 +8,12 @@ public class EnemyController : MonoBehaviour
     public float timer;
     public float countdownTime = 0.5f;
     int randomDirection;
+    public Vector3 spawnPosition;
 
     void Start()
     {
         r = FindObjectOfType<RecursiveMazeGenerator>();
 
-        transform.position = getStartPos();
         randomDirection = Random.Range(0, 4);
         Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("enemy"), LayerMask.NameToLayer("key"));
     }
@@ -49,23 +49,7 @@ public class EnemyController : MonoBehaviour
         transform.position += change * speed * Time.deltaTime;
     }
 
-    Vector2 getStartPos()
-    {
-        Vector2 startPos;
-        int width = r.screenWidth;
-        int height = r.screenHeight;
-
-        while (true)
-        {
-            float x = Random.Range(-width / 2, width / 2);
-            float y = Random.Range(-height / 2, height / 2);
-            if (r.maze[(int)(x + width / 2), (int)(y + height / 2)] == 1)
-            {
-                startPos = new Vector2(x, y);
-                return startPos;
-            }
-        }
-    }
+   
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -74,6 +58,7 @@ public class EnemyController : MonoBehaviour
         {
             
             randomDirection = Random.Range(0, 4);
+            
 
         }
         timer = countdownTime;
@@ -88,6 +73,7 @@ public class EnemyController : MonoBehaviour
             else
             {
                 randomDirection = Random.Range(0, 4);
+            
             }
         
        

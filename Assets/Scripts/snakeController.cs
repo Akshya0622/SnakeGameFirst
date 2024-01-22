@@ -1,6 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using static UnityEditor.FilePathAttribute;
 
 
 public class snakeController : MonoBehaviour
@@ -12,8 +15,10 @@ public class snakeController : MonoBehaviour
     public int health = 5;
     public healthBar healthBar;
     public GameObject laserPrefab;
-    public Vector2 lastNonZeroMovementDirection = Vector2.right;
-
+    public Vector2 lastMove = Vector2.right;
+    public int collectedKeys = 0;
+    public GameObject eggPrefab;
+    public RecursiveMazeGenerator r;
     // Start is called before the first frame update
     void Start()
     {
@@ -30,7 +35,7 @@ public class snakeController : MonoBehaviour
         vertical = Input.GetAxis("Vertical");
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            Shoot();
+            shoot(); // shoots lasers when space bar is pressed
 
         }
 
@@ -39,15 +44,15 @@ public class snakeController : MonoBehaviour
     void FixedUpdate()
     {
         Vector2 position = rigidbody2d.position;
-        position.x = position.x + speed * horizontal * Time.deltaTime;
-        position.y = position.y + speed * vertical * Time.deltaTime;
+        position.x+=speed * horizontal * Time.deltaTime;
+        position.y+= speed * vertical * Time.deltaTime;
         
         if (horizontal != 0 || vertical != 0)
         {
-            lastNonZeroMovementDirection = new Vector2(horizontal, vertical).normalized; // last time we were moving so the laser knows which direction to go
+            lastMove = new Vector2(horizontal, vertical).normalized; // last time we were moving so the laser knows which direction to go
         }
-        rigidbody2d.MovePosition(position);
-        healthBar.setHealth(health);
+        rigidbody2d.MovePosition(position); // move player
+        healthBar.setHealth(health); // set health
 
 
 
@@ -58,37 +63,81 @@ public class snakeController : MonoBehaviour
         if (collision.gameObject.tag == "key")
         {
             Destroy(collision.gameObject);
+            collectedKeys++;
+            if (collectedKeys == 3)
+            {
+               for(int i = -2; i <=3; i ++)
+                {
+                    Vector3 location = new Vector3((r.screenWidth + i) * r.cellSize, (r.screenHeight - 2) * r.cellSize, 0) + r.centerize;
+
+                   
+
+                    Destroy(destroyWall(location));
+                    if (i == 3)
+                    {
+                        Instantiate(eggPrefab, location, Quaternion.identity);
+                    }
+                }
+                   
+                
+            }
         }
         if (collision.gameObject.tag == "enemy")
         {
             health--;
 
-            Debug.Log(health);
+            Debug.Log("Health: " + health);
+
+            if(health <= 0)
+            {
+                SceneManager.LoadScene("LoseScreen");
+            }
+        }
+        if(collision.gameObject.tag == "egg")
+        {
+            SceneManager.LoadScene("WinScreen");
         }
     }
 
-    void Shoot()
+    void shoot()
     {
 
-        GameObject laserObject = Instantiate(laserPrefab, transform.position, Quaternion.identity);
+        GameObject laser = Instantiate(laserPrefab, transform.position, Quaternion.identity);
 
-        if (laserObject != null)
+        if (laser != null)
         {
-            // Set the direction for the laser based on player's movement
-            laserScript laserScript = laserObject.GetComponent<laserScript>();
+            
+            laserScript ls = laser.GetComponent<laserScript>();
 
-            if (laserScript != null)
+            if (ls != null)
             {
-                laserScript.SetDirection(lastNonZeroMovementDirection);
+                ls.SetDirection(lastMove);
             }
             else
             {
-                Debug.LogError("Laser script not found on instantiated laser!");
+                Debug.LogError("if u get a null error the script is acting weird");
             }
         }
         else
         {
-            Debug.LogError("Failed to instantiate laser prefab!");
+            Debug.LogError("if u get a null error prefab is acting weird");
         }
+    }
+    GameObject destroyWall(Vector3 location)
+    {
+        RaycastHit2D findWall = Physics2D.Raycast(location, Vector2.zero);
+      
+        if (findWall.collider != null)
+        {
+            return findWall.collider.gameObject;
+           
+        }
+        else
+        {
+            Debug.LogWarning("No wall found");
+            return null;
+        }
+        
+
     }
 }
